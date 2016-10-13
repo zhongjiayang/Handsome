@@ -1,4 +1,4 @@
-package Service;     //Óë·şÎñ¶Ë°üÃûÏàÍ¬
+package Service;     //ä¸æœåŠ¡ç«¯åŒ…åç›¸åŒ
 
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageDecoder;
@@ -48,74 +48,74 @@ import javax.swing.event.ChangeListener;
  * @author wealthypanda
  */
 
-//½ÓÊÕÍ¼Ïñ²¢»æÖÆµÄÏß³Ì
+//æ¥æ”¶å›¾åƒå¹¶ç»˜åˆ¶çš„çº¿ç¨‹
 class ReceiveImageThread implements Runnable {
     
-    private String ipNumber;                     //ÓÃÓÚ´æ´¢ÊäÈëµÄIpµØÖ·
-    private int intPortNumber;                   //ÓÃÓÚ´æ´¢ÊäÈëµÄ¶Ë¿ÚºÅ
+    private String ipNumber;                     //ç”¨äºå­˜å‚¨è¾“å…¥çš„Ipåœ°å€
+    private int intPortNumber;                   //ç”¨äºå­˜å‚¨è¾“å…¥çš„ç«¯å£å·
     private int intSleepTime=100;
-    private String connectNumber;                //ÓÃÓÚ´æ´¢ÊäÈëµÄÁ¬½ÓÃÜÂë
-    private JFrame frame;                        //½ÓÊÕÍ¼ÏñµÄÖ÷´°¿Ú
-    private JPanel panelImage=new JPanel();      //»æÖÆÍ¼ÏñµÄ×é¼ş
-    private JPanel panelButton;                  //´æ·Å°´Å¥µÄ×é¼ş
-    private JButton controlB;                    //¿ØÖÆ°´Å¥
+    private String connectNumber;                //ç”¨äºå­˜å‚¨è¾“å…¥çš„è¿æ¥å¯†ç 
+    private JFrame frame;                        //æ¥æ”¶å›¾åƒçš„ä¸»çª—å£
+    private JPanel panelImage=new JPanel();      //ç»˜åˆ¶å›¾åƒçš„ç»„ä»¶
+    private JPanel panelButton;                  //å­˜æ”¾æŒ‰é’®çš„ç»„ä»¶
+    private JButton controlB;                    //æ§åˆ¶æŒ‰é’®
     private JSlider setSleepTime;
-    private JLabel tipsT;                        //½ÓÊÕÍ¼Æ¬×é¼şµÄÌáÊ¾ĞÅÏ¢
-    private BufferedImage image;                 //ÓÃÓÚ´æ´¢½ÓÊÕµÄÍ¼Æ¬
-    private InputStream is2;                     //SocketÊäÈëÁ÷£¨½ÓÊÕÍ¼Æ¬£©
+    private JLabel tipsT;                        //æ¥æ”¶å›¾ç‰‡ç»„ä»¶çš„æç¤ºä¿¡æ¯
+    private BufferedImage image;                 //ç”¨äºå­˜å‚¨æ¥æ”¶çš„å›¾ç‰‡
+    private InputStream is2;                     //Socketè¾“å…¥æµï¼ˆæ¥æ”¶å›¾ç‰‡ï¼‰
     private Socket socket;                       //Socket
-    private BufferedInputStream bis;             //ÓÃÓÚÊä³öÃÜÂë
+    private BufferedInputStream bis;             //ç”¨äºè¾“å‡ºå¯†ç 
     private JPEGImageDecoder decoder;            //
     private ObjectOutputStream oos;
     private OutputStream os;
-    private int hp;          //´æ´¢×é¼şµÄ¸ß
-    private int hi;          //´æ´¢Í¼ÏñµÄ¸ß
-    private int wp;          //´æ´¢×é¼şµÄ¿í
-    private int wi;          //´æ´¢Í¼ÏñµÄ¿í    Ö÷ÒªÓÃÓÚ±ÈÀıËõ·Å
-    private ControlInterface control;       //ÓÃÓÚ´æ´¢Ô¶³Ì¶ÔÏóµÄ´æ¸ù¶ÔÏó£¨RMIÏà¹Ø£©
+    private int hp;          //å­˜å‚¨ç»„ä»¶çš„é«˜
+    private int hi;          //å­˜å‚¨å›¾åƒçš„é«˜
+    private int wp;          //å­˜å‚¨ç»„ä»¶çš„å®½
+    private int wi;          //å­˜å‚¨å›¾åƒçš„å®½    ä¸»è¦ç”¨äºæ¯”ä¾‹ç¼©æ”¾
+    private ControlInterface control;       //ç”¨äºå­˜å‚¨è¿œç¨‹å¯¹è±¡çš„å­˜æ ¹å¯¹è±¡ï¼ˆRMIç›¸å…³ï¼‰
     
-    private MouseAndKeyOfButtonChange mkbc0 = new MouseAndKeyOfButtonChange(0);         //¿ªÆô¿ØÖÆ°´Å¥
-    private MouseAndKeyOfButtonChange mkbc1 = new MouseAndKeyOfButtonChange(1);         //¿ªÆô¼àÊÓ°´Å¥
-    private MouseAndKeyOfButtonChange mkbc2 = new MouseAndKeyOfButtonChange(2);         //Ô¶³Ì¿ØÖÆ
+    private MouseAndKeyOfButtonChange mkbc0 = new MouseAndKeyOfButtonChange(0);         //å¼€å¯æ§åˆ¶æŒ‰é’®
+    private MouseAndKeyOfButtonChange mkbc1 = new MouseAndKeyOfButtonChange(1);         //å¼€å¯ç›‘è§†æŒ‰é’®
+    private MouseAndKeyOfButtonChange mkbc2 = new MouseAndKeyOfButtonChange(2);         //è¿œç¨‹æ§åˆ¶
         
     public void run() {
 
-        ipNumber=MainFrameThread.ipNumberT.getText();                           //»ñµÃIpµØÖ·
+        ipNumber=MainFrameThread.ipNumberT.getText();                           //è·å¾—Ipåœ°å€
         try{
-            intPortNumber=new Integer(MainFrameThread.portNumberT.getText());   //¶Ë¿ÚºÅ
+            intPortNumber=new Integer(MainFrameThread.portNumberT.getText());   //ç«¯å£å·
             if(intPortNumber>65535){
-                MainFrameThread.information.append("¶Ë¿ÚºÅ´óÓÚ65535\n");
+                MainFrameThread.information.append("ç«¯å£å·å¤§äº65535\n");
             }
         }catch(Exception e){
-             MainFrameThread.information.append("IPµØÖ·Óë¶Ë¿ÚºÅ·Ç·¨\n");
+             MainFrameThread.information.append("IPåœ°å€ä¸ç«¯å£å·éæ³•\n");
         }
         try{
             intSleepTime=Math.abs(new Integer(MainFrameThread.sleepTimeT.getText()));
             if(intSleepTime>1000){
-                MainFrameThread.information.append("ºÁÃëÊı³¬³öÉèÖÃ·¶Î§£¬Ê¹ÓÃÄ¬ÈÏÖµ100\n");
+                MainFrameThread.information.append("æ¯«ç§’æ•°è¶…å‡ºè®¾ç½®èŒƒå›´ï¼Œä½¿ç”¨é»˜è®¤å€¼100\n");
                 intSleepTime=100;
             }
         }catch(Exception e){
-            MainFrameThread.information.append("ºÁÃëÊıÉèÖÃÎª¿Õ»ò´æÔÚ·Ç·¨×Ö·û\n");
-            MainFrameThread.information.append("Ê¹ÓÃÄ¬ÈÏºÁÃëÊı100\n");
+            MainFrameThread.information.append("æ¯«ç§’æ•°è®¾ç½®ä¸ºç©ºæˆ–å­˜åœ¨éæ³•å­—ç¬¦\n");
+            MainFrameThread.information.append("ä½¿ç”¨é»˜è®¤æ¯«ç§’æ•°100\n");
             intSleepTime=100;
         }
-        connectNumber=MainFrameThread.connectNumberT.getText();                 //Á¬½ÓÃÜÂë
+        connectNumber=MainFrameThread.connectNumberT.getText();                 //è¿æ¥å¯†ç 
         try {      
-            socket = new Socket();                                              //´´½¨socket£¬ºËÑéÃÜÂë
+            socket = new Socket();                                              //åˆ›å»ºsocketï¼Œæ ¸éªŒå¯†ç 
             SocketAddress sAdd=new InetSocketAddress(ipNumber,intPortNumber);
             socket.connect(sAdd, 60000);
             os=socket.getOutputStream();
             oos=new ObjectOutputStream(os);
             oos.writeObject(connectNumber);
 
-            is2 = socket.getInputStream();	                                // »ñÈ¡ÍøÂçÊäÈëÁ÷
+            is2 = socket.getInputStream();	                                // è·å–ç½‘ç»œè¾“å…¥æµ
             bis = new BufferedInputStream(is2);
             decoder = JPEGCodec.createJPEGDecoder(bis);
             socket.setTcpNoDelay(true);
             socket.setReceiveBufferSize(1024*1024);
 
-            frame=new JFrame();                                                 //ÓÃÓÚÏÔÊ¾Ô¶³Ì×ÀÃæµÄ×é¼ş
+            frame=new JFrame();                                                 //ç”¨äºæ˜¾ç¤ºè¿œç¨‹æ¡Œé¢çš„ç»„ä»¶
             frame.setBounds(0, 0, 860, 574);
             frame.setIconImage(MainFrameThread.icon.getImage());
             frame.setTitle(ipNumber);
@@ -123,7 +123,7 @@ class ReceiveImageThread implements Runnable {
             frame.setLayout(null);
             frame.addWindowListener(new MainFrameWinLis());
                                     
-            controlB=new JButton("¿Ø  ÖÆ");                                     //¿ØÖÆ¿ª¹Ø°´Å¥
+            controlB=new JButton("æ§  åˆ¶");                                     //æ§åˆ¶å¼€å…³æŒ‰é’®
             controlB.setBounds(30, 5, 70, 27);
             controlB.setFocusable(false);
 
@@ -131,7 +131,7 @@ class ReceiveImageThread implements Runnable {
             setSleepTime.setBounds(150, 10, 200, 20);
             setSleepTime.addChangeListener(new SleepTimeChange());
             
-            tipsT=new JLabel(String.valueOf(intSleepTime)+" ms");                                        //ĞÅÏ¢ÌáÊ¾
+            tipsT=new JLabel(String.valueOf(intSleepTime)+" ms");                                        //ä¿¡æ¯æç¤º
             tipsT.setBounds(355, 5, 50, 27);
             tipsT.setFocusable(false);
             tipsT.setForeground(Color.red);
@@ -139,11 +139,11 @@ class ReceiveImageThread implements Runnable {
             tipsT.setFont(tipsT.getFont().deriveFont(20));
             tipsT.setVisible(true);
 
-            panelImage=new JPanel();                                            //ÏÔÊ¾Í¼ÏñµÄpanel
+            panelImage=new JPanel();                                            //æ˜¾ç¤ºå›¾åƒçš„panel
             panelImage.setFocusable(false);
             controlB.addMouseListener(mkbc0);
             
-            panelButton=new JPanel();                                           //²Ù×÷°´Å¥µÄpanel
+            panelButton=new JPanel();                                           //æ“ä½œæŒ‰é’®çš„panel
             panelButton.setLayout(null);
             panelButton.add(controlB);
             panelButton.add(tipsT);
@@ -154,29 +154,29 @@ class ReceiveImageThread implements Runnable {
             frame.add( panelButton);
             frame.setVisible(true);
 
-            control= (ControlInterface)Naming.lookup("//"+ipNumber+":1099/Control");   //»ñµÃÔ¶³Ì¶ÔÏóµÄ´æ¸ù¶ÔÏó£¨RMIÏà¹Ø£©
-            control.sleepTime(intSleepTime);                                           //µ÷ÓÃÔ¶³Ì·½·¨£¬ÉèÖÃĞİÃßÊ±¼ä
+            control= (ControlInterface)Naming.lookup("//"+ipNumber+":1099/Control");   //è·å¾—è¿œç¨‹å¯¹è±¡çš„å­˜æ ¹å¯¹è±¡ï¼ˆRMIç›¸å…³ï¼‰
+            control.sleepTime(intSleepTime);                                           //è°ƒç”¨è¿œç¨‹æ–¹æ³•ï¼Œè®¾ç½®ä¼‘çœ æ—¶é—´
             MainFrameThread.information.append(MainFrameThread.getTime());
-            MainFrameThread.information.append("Á¬½Ó³É¹¦£¬¿ªÊ¼½ÓÊÕÊı¾İ\n");
+            MainFrameThread.information.append("è¿æ¥æˆåŠŸï¼Œå¼€å§‹æ¥æ”¶æ•°æ®\n");
 
             while (!socket.isClosed()) {
                 Thread.sleep(100);
-                socket.sendUrgentData(0xff);  //Ä¿µÄÔÚÓÚÅĞ¶ÏÔ¶³ÌÁ¬½ÓÊÇ·ñ¹Ø±Õ
+                
                 panelImage.setBounds(0, 0, frame.getWidth()-5, frame.getHeight()-70);
                 panelButton.setBounds(0, frame.getHeight()-70, frame.getWidth(),70);
-	        // ´´½¨JPEG½âÂëÆ÷
-                image = decoder.decodeAsBufferedImage();	// ´ÓÊäÈëÁ÷½âÂëJPEGÍ¼Æ¬
-                wi=image.getWidth();         //»ñµÃÍ¼ÏñµÄ´óĞ¡£¬ÓÃÓÚ¼ÆËã±ÈÀı£¬¾«È·¿ØÖÆÊó±êÎ»ÖÃ
+	        // åˆ›å»ºJPEGè§£ç å™¨
+                image = decoder.decodeAsBufferedImage();	// ä»è¾“å…¥æµè§£ç JPEGå›¾ç‰‡
+                wi=image.getWidth();         //è·å¾—å›¾åƒçš„å¤§å°ï¼Œç”¨äºè®¡ç®—æ¯”ä¾‹ï¼Œç²¾ç¡®æ§åˆ¶é¼ æ ‡ä½ç½®
                 hi=image.getHeight();
                 Graphics g=panelImage.getGraphics();
-                wp=panelImage.getWidth();   //»ñµÃ×é¼şµÄ´óĞ¡£¬ÓÃÓÚ¼ÆËã±ÈÀı£¬¾«È·¿ØÖÆÊó±êµÄÎ»ÖÃ
+                wp=panelImage.getWidth();   //è·å¾—ç»„ä»¶çš„å¤§å°ï¼Œç”¨äºè®¡ç®—æ¯”ä¾‹ï¼Œç²¾ç¡®æ§åˆ¶é¼ æ ‡çš„ä½ç½®
                 hp=panelImage.getHeight();
-                g.drawImage(image, 0, 0,wp,hp, panelImage);  //ÔÚ×é¼şÉÏ»æÖÆÍ¼Ïñ
+                g.drawImage(image, 0, 0,wp,hp, panelImage);  //åœ¨ç»„ä»¶ä¸Šç»˜åˆ¶å›¾åƒ
             }
         } catch (UnknownHostException ex) {
-            MainFrameThread.information.append("ÎŞ·¨Á¬½ÓÖ÷»ú\n");
+            MainFrameThread.information.append("æ— æ³•è¿æ¥ä¸»æœº\n");
         } catch (Exception ex) {
-            MainFrameThread.information.append("Á¬½Ó¹Ø±Õ\n");
+            MainFrameThread.information.append("è¿æ¥å…³é—­\n");
             frame.dispose();
         }
 
@@ -184,16 +184,16 @@ class ReceiveImageThread implements Runnable {
     class MainFrameWinLis implements WindowListener{
 
         public void windowOpened(WindowEvent e) {
-            frame.getFocusListeners();//frame»ñµÃ½¹µã£¬ÓÃÓÚ¼àÌı¼üÅÌÊÂ¼ş
+            frame.getFocusListeners();//frameè·å¾—ç„¦ç‚¹ï¼Œç”¨äºç›‘å¬é”®ç›˜äº‹ä»¶
         }
 
         public void windowClosing(WindowEvent e) {
             try {
                 MainFrameThread.information.append(MainFrameThread.getTime());
-                MainFrameThread.information.append("¹Ø±ÕÓë"+ipNumber+"µÄÁ¬½Ó"+"\n");
-                socket.close();    //SocketException ÈçºÎ´¦Àí£¿£¿
+                MainFrameThread.information.append("å…³é—­ä¸"+ipNumber+"çš„è¿æ¥"+"\n");
+                socket.close();    //SocketException å¦‚ä½•å¤„ç†ï¼Ÿï¼Ÿ
             } catch (IOException ex) {
-                MainFrameThread.information.append("socketÎŞ·¨¹Ø±Õ\n");
+                MainFrameThread.information.append("socketæ— æ³•å…³é—­\n");
             }
         }
 
@@ -227,7 +227,7 @@ class ReceiveImageThread implements Runnable {
                 control.sleepTime(setSleepTime.getValue());
                 tipsT.setText(String.valueOf(setSleepTime.getValue())+" ms");
             } catch (RemoteException ex) {
-                MainFrameThread.information.append("Ô¶³Ì·½·¨µ÷ÓÃÒì³£Ô­ÒòÔÚÓÚST\n");
+                MainFrameThread.information.append("è¿œç¨‹æ–¹æ³•è°ƒç”¨å¼‚å¸¸åŸå› åœ¨äºST\n");
             }
         }
 
@@ -243,7 +243,7 @@ class ReceiveImageThread implements Runnable {
         Socket scanSocket;
 
         MouseAndKeyOfButtonChange(int wherebcopy) {
-            whereB = wherebcopy;  //0´ú±í¿ªÆô¿ØÖÆ£»1´ú±í¿ªÆô¼àÊÓ£»2´ú±í¿ØÖÆ
+            whereB = wherebcopy;  //0ä»£è¡¨å¼€å¯æ§åˆ¶ï¼›1ä»£è¡¨å¼€å¯ç›‘è§†ï¼›2ä»£è¡¨æ§åˆ¶
         }
        
         public void mouseClicked(MouseEvent e1) {
@@ -268,11 +268,11 @@ class ReceiveImageThread implements Runnable {
                 switch (whereB){
                     case 0 : {
                         if (e2.getButton() == MouseEvent.BUTTON1){
-                            panelImage.addMouseMotionListener(mkbc2);         //¿ªÆô¶ÔÔ¶³Ì×ÀÃæµÄ¿ØÖÆ
+                            panelImage.addMouseMotionListener(mkbc2);         //å¼€å¯å¯¹è¿œç¨‹æ¡Œé¢çš„æ§åˆ¶
                             panelImage.addMouseListener(mkbc2);
                             panelImage.addMouseWheelListener(mkbc2);
                             frame.addKeyListener(mkbc2);
-                            controlB.setText("¼à  ÊÓ");
+                            controlB.setText("ç›‘  è§†");
                             controlB.removeMouseListener(mkbc0);
                             controlB.addMouseListener(mkbc1);
                         }                        
@@ -284,7 +284,7 @@ class ReceiveImageThread implements Runnable {
                             panelImage.removeMouseMotionListener(mkbc2);
                             panelImage.removeMouseWheelListener(mkbc2);
                             frame.removeKeyListener(mkbc2);
-                            controlB.setText("¿Ø  ÖÆ");
+                            controlB.setText("æ§  åˆ¶");
                             controlB.removeMouseListener(mkbc1);
                             controlB.addMouseListener(mkbc0);
                         }
@@ -303,7 +303,7 @@ class ReceiveImageThread implements Runnable {
                         try{
                             control.controlMousePress(buttons);
                         }catch (Exception e){
-                            MainFrameThread.information.append("Ô¶³Ì¿ØÖÆ´íÎóÔÚMP");
+                            MainFrameThread.information.append("è¿œç¨‹æ§åˆ¶é”™è¯¯åœ¨MP");
                         }
                     }
                 }  
@@ -332,7 +332,7 @@ class ReceiveImageThread implements Runnable {
                         try{
                             control.controlMouseRelease(buttons);
                         }catch (Exception e){
-                            MainFrameThread.information.append("Ô¶³Ì¿ØÖÆ´íÎóÔÚMR");
+                            MainFrameThread.information.append("è¿œç¨‹æ§åˆ¶é”™è¯¯åœ¨MR");
                         }
                 }
                 break;
@@ -402,7 +402,7 @@ class ReceiveImageThread implements Runnable {
                         
                         control.controlKeyPress(e7.getKeyCode());
                     } catch (Exception ex) {
-                        MainFrameThread.information.append("Ô¶³Ì¿ØÖÆ´íÎóÔÚKP");
+                        MainFrameThread.information.append("è¿œç¨‹æ§åˆ¶é”™è¯¯åœ¨KP");
                     }
                 }
                 break;
@@ -423,7 +423,7 @@ class ReceiveImageThread implements Runnable {
                      try {
                          control.controlKeyRelease(e8.getKeyCode());
                     } catch (Exception ex) {
-                        MainFrameThread.information.append("Ô¶³Ì¿ØÖÆ´íÎóÔÚKR");
+                        MainFrameThread.information.append("è¿œç¨‹æ§åˆ¶é”™è¯¯åœ¨KR");
                     }
                 }
                 break;
@@ -441,14 +441,14 @@ class ReceiveImageThread implements Runnable {
                 }
                 break;
                 case 2 : {
-                    int x=e9.getX();       //»ñµÃÊó±êÔÚ×é¼şÖĞµÄÎ»ÖÃ
+                    int x=e9.getX();       //è·å¾—é¼ æ ‡åœ¨ç»„ä»¶ä¸­çš„ä½ç½®
                     int y=e9.getY();
-                    x=(x*(1024*10000/wp))/10000;        //¼ÆËãÔ¶³ÌÊó±êÒÆ¶¯µÄÎ»ÖÃ£¬³ËÒÔ10000ÓÃÓÚ¼õĞ¡Îó²î£¬³ıÒÔ10000ÓÃÒÔÈ·¶¨Î»ÖÃ
+                    x=(x*(1024*10000/wp))/10000;        //è®¡ç®—è¿œç¨‹é¼ æ ‡ç§»åŠ¨çš„ä½ç½®ï¼Œä¹˜ä»¥10000ç”¨äºå‡å°è¯¯å·®ï¼Œé™¤ä»¥10000ç”¨ä»¥ç¡®å®šä½ç½®
                     y=(y*(768*10000/hp))/10000;
                     try {
                         control.controlMouseMove(x, y);
                     } catch (Exception ex) {
-                        MainFrameThread.information.append("Ô¶³Ì¿ØÖÆ´íÎóÔÚMD");
+                        MainFrameThread.information.append("è¿œç¨‹æ§åˆ¶é”™è¯¯åœ¨MD");
                     }
                 }
                 break;
@@ -466,14 +466,14 @@ class ReceiveImageThread implements Runnable {
                 }
                 break;
                 case 2 : {
-                    int x=e10.getX();       //»ñµÃÊó±êÔÚ×é¼şÖĞµÄÎ»ÖÃ
+                    int x=e10.getX();       //è·å¾—é¼ æ ‡åœ¨ç»„ä»¶ä¸­çš„ä½ç½®
                     int y=e10.getY();
-                    x=(x*(1024*10000/wp))/10000;        //¼ÆËãÔ¶³ÌÊó±êÒÆ¶¯µÄÎ»ÖÃ£¬³ËÒÔ10000ÓÃÓÚ¼õĞ¡Îó²î£¬³ıÒÔ10000ÓÃÒÔÈ·¶¨Î»ÖÃ
+                    x=(x*(1024*10000/wp))/10000;        //è®¡ç®—è¿œç¨‹é¼ æ ‡ç§»åŠ¨çš„ä½ç½®ï¼Œä¹˜ä»¥10000ç”¨äºå‡å°è¯¯å·®ï¼Œé™¤ä»¥10000ç”¨ä»¥ç¡®å®šä½ç½®
                     y=(y*(768*10000/hp))/10000;
                     try {
                         control.controlMouseMove(x, y);
                     } catch (Exception ex) {
-                        MainFrameThread.information.append("Ô¶³Ì¿ØÖÆ´íÎóÔÚMM");
+                        MainFrameThread.information.append("è¿œç¨‹æ§åˆ¶é”™è¯¯åœ¨MM");
                     }
                 }
                 break;
@@ -494,7 +494,7 @@ class ReceiveImageThread implements Runnable {
                      try {
                         control.controlMouseWheel(e11.getWheelRotation());
                     } catch (Exception ex) {
-                        MainFrameThread.information.append("Ô¶³Ì¿ØÖÆ´íÎóÔÚMWM");
+                        MainFrameThread.information.append("è¿œç¨‹æ§åˆ¶é”™è¯¯åœ¨MWM");
                     }
                 }
                 break;
@@ -506,7 +506,7 @@ class ReceiveImageThread implements Runnable {
 }
 
 //*******************************************************************************************************************
-//Ö÷½çÃæÏß³Ì
+//ä¸»ç•Œé¢çº¿ç¨‹
 //*******************************************************************************************************************
 class MainFrameThread implements Runnable{
 
@@ -542,16 +542,16 @@ class MainFrameThread implements Runnable{
     static ImageIcon icon= new ImageIcon("trayIconC.png");
     private TrayIcon trayIcon;
 
-    private MouseAndKeyOfButtonChange mkbc0 = new MouseAndKeyOfButtonChange(0);        //ÓÃÓÚÉèÖÃÀ­¿ª°´Å¥µÄ¼àÌı
-    private MouseAndKeyOfButtonChange mkbc1 = new MouseAndKeyOfButtonChange(1);        //ÓÃÓÚÉèÖÃÊÕÆğ°´Å¥µÄ¼àÌı
-    private MouseAndKeyOfButtonChange mkbc2 = new MouseAndKeyOfButtonChange(2);        //ÓÃÓÚÉèÖÃÁ¬½Ó°´Å¥µÄ¼àÌı
-    private MouseAndKeyOfButtonChange mkbc3 = new MouseAndKeyOfButtonChange(3);        //ÓÃÓÚÉè¶¨¿ªÊ¼°´Å¥µÄ¼àÌı
-    private MouseAndKeyOfButtonChange mkbc4 = new MouseAndKeyOfButtonChange(4);        //ÓÃÓÚÉè¶¨ÊäÈëÁ¬½ÓÃÜÂëÎÄ±¾¿òµÄ¼àÌı
+    private MouseAndKeyOfButtonChange mkbc0 = new MouseAndKeyOfButtonChange(0);        //ç”¨äºè®¾ç½®æ‹‰å¼€æŒ‰é’®çš„ç›‘å¬
+    private MouseAndKeyOfButtonChange mkbc1 = new MouseAndKeyOfButtonChange(1);        //ç”¨äºè®¾ç½®æ”¶èµ·æŒ‰é’®çš„ç›‘å¬
+    private MouseAndKeyOfButtonChange mkbc2 = new MouseAndKeyOfButtonChange(2);        //ç”¨äºè®¾ç½®è¿æ¥æŒ‰é’®çš„ç›‘å¬
+    private MouseAndKeyOfButtonChange mkbc3 = new MouseAndKeyOfButtonChange(3);        //ç”¨äºè®¾å®šå¼€å§‹æŒ‰é’®çš„ç›‘å¬
+    private MouseAndKeyOfButtonChange mkbc4 = new MouseAndKeyOfButtonChange(4);        //ç”¨äºè®¾å®šè¾“å…¥è¿æ¥å¯†ç æ–‡æœ¬æ¡†çš„ç›‘å¬
     private MouseAndKeyOfButtonChange mkbc5 = new MouseAndKeyOfButtonChange(5);
 
     public void run() { 
 
-        mainFrame=new JFrame("Ô¶³Ì×ÀÃæÏµÍ³¿Í»§¶Ë");
+        mainFrame=new JFrame("è¿œç¨‹æ¡Œé¢ç³»ç»Ÿå®¢æˆ·ç«¯");
         mainFrame.setBounds(345, 228, 333, 253);
         mainFrame.setIconImage(icon.getImage());
         mainFrame.setResizable(false);
@@ -569,47 +569,47 @@ class MainFrameThread implements Runnable{
             String hostName=ia.getHostName();
             String hostIp=ia.getHostAddress();
             information.append(getTime());
-            information.append("¿Í»§¶Ë³ÌĞòÆô¶¯\n");
-            information.append("±¾µØÖ÷»úÃû:"+hostName+"\n");
-            information.append("±¾µØµØÖ·:"+hostIp+"\n");
+            information.append("å®¢æˆ·ç«¯ç¨‹åºå¯åŠ¨\n");
+            information.append("æœ¬åœ°ä¸»æœºå:"+hostName+"\n");
+            information.append("æœ¬åœ°åœ°å€:"+hostIp+"\n");
         } catch (UnknownHostException ex) {
-            information.append("ÍøÂçÒì³£»òÖ÷»ú²»´æÔÚ\n");
+            information.append("ç½‘ç»œå¼‚å¸¸æˆ–ä¸»æœºä¸å­˜åœ¨\n");
             System.exit(1);
         }
         
-        ipNumberL=new JLabel("ÇëÊäÈëIPµØÖ·£º");
+        ipNumberL=new JLabel("è¯·è¾“å…¥IPåœ°å€ï¼š");
         ipNumberL.setBounds(20, 20, 100, 20);
         ipNumberT=new TextField(15);
         ipNumberT.setBounds(120, 20, 165, 20);
 
-        portNumberL=new JLabel("ÇëÊäÈë¶Ë¿ÚºÅ£º");
+        portNumberL=new JLabel("è¯·è¾“å…¥ç«¯å£å·ï¼š");
         portNumberL.setBounds(20, 50, 100, 20);
         portNumberT=new TextField(5);
         portNumberT.setBounds(120, 50, 165, 20);
 
-        connectNumberL=new JLabel("Á¬½ÓÃÜÂë£º");
+        connectNumberL=new JLabel("è¿æ¥å¯†ç ï¼š");
         connectNumberL.setBounds(20, 80, 70, 20);
         connectNumberT=new TextField(6);
         connectNumberT.setBounds(90, 80, 60, 20);
         connectNumberT.setEchoChar('*');
         connectNumberT.addKeyListener(mkbc4);
 
-        sleepTimeLS=new JLabel("ÉèÖÃ");
+        sleepTimeLS=new JLabel("è®¾ç½®");
         sleepTimeLS.setBounds(170, 80, 30, 20);
 
         sleepTimeT=new TextField();
         sleepTimeT.setBounds(200, 80, 40, 20);
         sleepTimeT.addKeyListener(mkbc5);
 
-        sleepTimeL=new JLabel("ºÁÃë/Ö¡");
+        sleepTimeL=new JLabel("æ¯«ç§’/å¸§");
         sleepTimeL.setBounds(245, 80, 50, 20);
         
 
-        moreB=new JButton("À­  ¿ª");
+        moreB=new JButton("æ‹‰  å¼€");
         moreB.setBounds(50, 120, 70, 30);
         moreB.addMouseListener(mkbc0);
 
-        connectB=new JButton("Á¬  ½Ó");
+        connectB=new JButton("è¿  æ¥");
         connectB.setBounds(205, 120, 70, 30);
         connectB.addMouseListener(mkbc2);
         connectB.addKeyListener(mkbc2);
@@ -633,7 +633,7 @@ class MainFrameThread implements Runnable{
 
     static String getTime(){
         GregorianCalendar gc=new GregorianCalendar();
-        String now=gc.get(Calendar.HOUR_OF_DAY)+"Ê±"+gc.get(Calendar.MINUTE)+"·Ö"+gc.get(Calendar.SECOND)+"Ãë";
+        String now=gc.get(Calendar.HOUR_OF_DAY)+"æ—¶"+gc.get(Calendar.MINUTE)+"åˆ†"+gc.get(Calendar.SECOND)+"ç§’";
         return now;
     }
 
@@ -661,30 +661,30 @@ class MainFrameThread implements Runnable{
                         moreB.removeMouseListener(mkbc0);
                         moreB.addMouseListener(mkbc1);
                         mainFrame.setVisible(false);
-                        moreB.setText("ÊÕ  Æğ");
+                        moreB.setText("æ”¶  èµ·");
                         mainFrame.setBounds(345, 128,333, 423);
 
-                        scanPortNL=new JLabel("ÒªÉ¨Ãè¶Ë¿ÚºÅ£º");
+                        scanPortNL=new JLabel("è¦æ‰«æç«¯å£å·ï¼š");
                         scanPortNL.setBounds(20, 260, 100, 20);
                         scanPortNT=new TextField("8000");
                         scanPortNT.setBounds(120, 260, 150, 20);
 
-                        netIpNL=new JLabel("ÊäÈëÍøÂçµØÖ·£º");
+                        netIpNL=new JLabel("è¾“å…¥ç½‘ç»œåœ°å€ï¼š");
                         netIpNL.setBounds(20, 290, 100, 20);
                         netIpNT=new TextField("192.168.1.");
                         netIpNT.setBounds(120, 290, 150, 20);
 
-                        startIpNL=new JLabel("ÊäÈëÖ÷»úµØÖ·£º  ´Ó");
+                        startIpNL=new JLabel("è¾“å…¥ä¸»æœºåœ°å€ï¼š  ä»");
                         startIpNL.setBounds(20, 320, 115, 20);
                         startIpNT=new TextField("1");
                         startIpNT.setBounds(135, 320, 30, 20);
 
-                        endIpNL=new JLabel("µ½");
+                        endIpNL=new JLabel("åˆ°");
                         endIpNL.setBounds(170, 320, 15, 20);
                         endIpNT=new TextField("254");
                         endIpNT.setBounds(190, 320, 30, 20);
 
-                        startB=new JButton("¿ª  Ê¼");
+                        startB=new JButton("å¼€  å§‹");
                         startB.setBounds(190, 350, 70, 30);
                         startB.addMouseListener(mkbc3);
                                               
@@ -701,7 +701,7 @@ class MainFrameThread implements Runnable{
                     }
                     break;
                     case 1 : {
-                        moreB.setText("À­  ¿ª");
+                        moreB.setText("æ‹‰  å¼€");
                         moreB.removeMouseListener(mkbc1);
                         moreB.addMouseListener(mkbc0);
                         mainFrame.setBounds(345, 228, 333, 253);
@@ -709,7 +709,7 @@ class MainFrameThread implements Runnable{
                     break;
                     case 2 : {
                         information.append(getTime());
-                        information.append("ÕıÔÚÓë"+ipNumberT.getText()+"ÇëÇóÁ¬½Ó¡­¡­\n");
+                        information.append("æ­£åœ¨ä¸"+ipNumberT.getText()+"è¯·æ±‚è¿æ¥â€¦â€¦\n");
                         ReceiveImageThread rit=new ReceiveImageThread();
                         Thread t2=new Thread(rit);
                         t2.start();
@@ -717,7 +717,7 @@ class MainFrameThread implements Runnable{
                     break;
                     case 3 : {
                         information.append(getTime());
-                        information.append("¿ªÊ¼É¨Ãè\n");
+                        information.append("å¼€å§‹æ‰«æ\n");
                         intScanP=new Integer(scanPortNT.getText());
                         copyNetIp=netIpNT.getText();
                         int intStartIp=new Integer(startIpNT.getText());
@@ -730,15 +730,15 @@ class MainFrameThread implements Runnable{
                                 scanSocket.connect(sa, 500);
                                 OutputStream os=scanSocket.getOutputStream();
                                 ObjectOutputStream oos=new ObjectOutputStream(os);
-                                oos.writeObject("²âÊÔÁ¬½Ó");
-                                information.append(copyNetIp + String.valueOf(intStartIp)+"¿ÉÁ¬½Ó\n");
+                                oos.writeObject("æµ‹è¯•è¿æ¥");
+                                information.append(copyNetIp + String.valueOf(intStartIp)+"å¯è¿æ¥\n");
                             }catch (IOException ex) {                               
-                                information.append(copyNetIp + String.valueOf(intStartIp)+"Î´Á¬½Ó\n");
+                                information.append(copyNetIp + String.valueOf(intStartIp)+"æœªè¿æ¥\n");
                             }
                         }
                     }
                     information.append(getTime());
-                    information.append("É¨Ãè½áÊø\n");
+                    information.append("æ‰«æç»“æŸ\n");
                     break;
                     case 5 : {
                         mainFrame.setVisible(true);
@@ -771,7 +771,7 @@ class MainFrameThread implements Runnable{
                    switch(e7.getKeyCode()){
                         case 10 : {
                             information.append(getTime());
-                            information.append("Óë"+ipNumberT.getText()+"½¨Á¢Á¬½Ó\n");
+                            information.append("ä¸"+ipNumberT.getText()+"å»ºç«‹è¿æ¥\n");
                             ReceiveImageThread rit=new ReceiveImageThread();
                             Thread t2=new Thread(rit);
                             t2.start();
@@ -784,7 +784,7 @@ class MainFrameThread implements Runnable{
                     switch(e7.getKeyCode()){
                         case 10 : {
                             information.append(getTime());
-                            information.append("Óë"+ipNumberT.getText()+"½¨Á¢Á¬½Ó\n");
+                            information.append("ä¸"+ipNumberT.getText()+"å»ºç«‹è¿æ¥\n");
                             ReceiveImageThread rit=new ReceiveImageThread();
                             Thread t2=new Thread(rit);
                             t2.start();
@@ -797,7 +797,7 @@ class MainFrameThread implements Runnable{
                     switch(e7.getKeyCode()){
                         case 10 : {
                             information.append(getTime());
-                            information.append("Óë"+ipNumberT.getText()+"½¨Á¢Á¬½Ó\n");
+                            information.append("ä¸"+ipNumberT.getText()+"å»ºç«‹è¿æ¥\n");
                             ReceiveImageThread rit=new ReceiveImageThread();
                             Thread t2=new Thread(rit);
                             t2.start();
@@ -845,7 +845,7 @@ class MainFrameThread implements Runnable{
         }
 
     }
-    //×îĞ¡»¯ÏµÍ³ÍĞÅÌµÄ·½·¨
+    //æœ€å°åŒ–ç³»ç»Ÿæ‰˜ç›˜çš„æ–¹æ³•
     private void initSystemTray() {
         if (SystemTray.isSupported()) {
             systemTray = SystemTray.getSystemTray();
@@ -857,7 +857,7 @@ class MainFrameThread implements Runnable{
         try {
             systemTray.add(trayIcon);
         } catch (AWTException e) {
-            MainFrameThread.information.append("ÕÒ²»µ½ÎÄ¼ş:trayIcon.png");
+            MainFrameThread.information.append("æ‰¾ä¸åˆ°æ–‡ä»¶:trayIcon.png");
         }
     }
 }
